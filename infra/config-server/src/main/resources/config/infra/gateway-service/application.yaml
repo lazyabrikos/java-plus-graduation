@@ -54,12 +54,3 @@ spring:
           uri: lb://main-service
           predicates:
             - Path=/admin/users/**
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
