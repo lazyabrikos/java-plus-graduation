@@ -5,14 +5,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>ru.practicum</groupId>
-        <artifactId>explore-with-me</artifactId>
+        <artifactId>stats</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>stats-server</artifactId>
     <name>stats-server</name>
 
-
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.jakarta.validation.jakarta.validation-api.version>3.0.2
+        </project.jakarta.validation.jakarta.validation-api.version>
+        <project.org.mapstruct.mapstruct.version>1.6.0</project.org.mapstruct.mapstruct.version>
+        <project.org.projectlombok.lombok-mapstruct-binding.version>0.2.0
+        </project.org.projectlombok.lombok-mapstruct-binding.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -90,6 +99,12 @@
         </dependency>
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
