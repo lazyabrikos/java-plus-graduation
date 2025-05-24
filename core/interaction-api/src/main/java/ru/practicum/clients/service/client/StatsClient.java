@@ -9,8 +9,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.practicum.HitRequestDto;
-import ru.practicum.StatsResponseDto;
+import ru.practicum.dto.stats.HitRequestDto;
+import ru.practicum.dto.stats.StatsResponseDto;
 import ru.practicum.errors.exceptions.StatsServerUnavailable;
 
 import java.net.URI;

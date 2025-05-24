@@ -1,6 +1,7 @@
 package ru.practicum.clients.service;
 
-import ru.practicum.StatsResponseDto;
+
+import ru.practicum.dto.stats.StatsResponseDto;
 
 import java.util.List;
 import java.util.Map;

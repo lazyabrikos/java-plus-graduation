@@ -3,9 +3,9 @@ package ru.practicum.clients.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.practicum.HitRequestDto;
-import ru.practicum.StatsResponseDto;
 import ru.practicum.clients.service.client.StatsClient;
+import ru.practicum.dto.stats.HitRequestDto;
+import ru.practicum.dto.stats.StatsResponseDto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

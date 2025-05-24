@@ -1,7 +1,7 @@
 package ru.practicum.mappers;
 
 import org.mapstruct.Mapper;
-import ru.practicum.StatsResponseDto;
+import ru.practicum.dto.stats.StatsResponseDto;
 import ru.practicum.model.Hit;
 
 import java.util.List;

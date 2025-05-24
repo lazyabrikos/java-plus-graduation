@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.HitRequestDto;
-import ru.practicum.StatsResponseDto;
+import ru.practicum.dto.stats.HitRequestDto;
+import ru.practicum.dto.stats.StatsResponseDto;
 import ru.practicum.service.StatService;
 
 import java.util.List;
