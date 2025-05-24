@@ -6,7 +6,7 @@ import ru.practicum.dto.stats.StatsResponseDto;
 
 import java.util.List;
 
-public interface StatService {
+public interface StatServiceMod {
     StatsResponseDto save(HitRequestDto body);
 
     List<StatsResponseDto> getStats(String start, String end, List<String> uris, Boolean unique);

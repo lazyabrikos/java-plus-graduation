@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
-public class StatsServiceImpl implements StatService {
+public class StatsServiceModImpl implements StatServiceMod {
     private final StatRepository repository;
     private final StatsMapper mapper;
 

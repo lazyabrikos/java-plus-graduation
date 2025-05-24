@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 @RestControllerAdvice
-public class ErrorHandler {
+public class StatErrorHandler {
 
     @ExceptionHandler({InvalidRequestException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
