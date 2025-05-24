@@ -6,4 +6,4 @@ CREATE TABLE IF NOT EXISTS comments
     text       VARCHAR(255)                            NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE             NOT NULL,
     CONSTRAINT pk_comments PRIMARY KEY (id)
-)
+);

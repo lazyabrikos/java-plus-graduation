@@ -16,7 +16,7 @@ public interface EventRepository extends JpaRepository<Event, Long>, CustomizedE
 
     @Query("select ev " +
             "from Event ev " +
-            "where ev.initiator.id = :userId " +
+            "where ev.initiatorId = :userId " +
             "order by ev.id desc")
     List<Event> findEventsOfUser(Long userId, PageRequest pageRequest);
 

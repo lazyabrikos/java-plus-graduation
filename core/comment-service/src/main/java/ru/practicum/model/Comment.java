@@ -23,8 +23,7 @@ public class Comment {
     @Column(name = "event_id")
     private Long eventId;
 
-    @OneToOne
-    @JoinColumn(name = "author_id")
+    @Column(name = "author_id")
     private Long authorId;
 
     @Column(name = "text")
