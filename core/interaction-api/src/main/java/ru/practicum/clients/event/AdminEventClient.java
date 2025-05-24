@@ -14,7 +14,7 @@ import ru.practicum.enums.events.EventState;
 
 import java.util.List;
 
-@FeignClient(name = "event-service", path = "/admin/events")
+@FeignClient(name = "event-service")
 public interface AdminEventClient {
     @GetMapping
     List<EventLongDto> getAllEventsByAdmin(
