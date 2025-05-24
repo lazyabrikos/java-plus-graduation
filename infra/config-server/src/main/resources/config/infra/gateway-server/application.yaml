@@ -26,11 +26,3 @@ spring:
           uri: lb://comment-service
           predicates:
             - Path=/comments/**,/admin/comments/**,/users/*/comments/**
-        - id: category_service_route
-          uri: lb://category-service
-          predicates:
-            - Path=/categories/**,/admin/categories/**
-        - id: compilation_service_route
-          uri: lb://compilation-service
-          predicates:
-            - Path=/compilations/**,/admin/compilations/**
