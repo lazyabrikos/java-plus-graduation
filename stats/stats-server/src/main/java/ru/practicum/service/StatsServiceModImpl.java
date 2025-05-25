@@ -23,9 +23,8 @@ public class StatsServiceModImpl implements StatServiceMod {
     private final StatRepository repository;
     private final StatsMapper mapper;
 
-    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
-
+    private static final DateTimeFormatter ISO_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
+    private static final DateTimeFormatter CUSTOM_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public StatsResponseDto save(HitRequestDto body) {
@@ -69,8 +68,10 @@ public class StatsServiceModImpl implements StatServiceMod {
     }
 
     private LocalDateTime getDateTime(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDateTime.parse(date, formatter);
+        try {
+            return LocalDateTime.parse(date, ISO_FORMATTER);
+        } catch (Exception e) {
+            return LocalDateTime.parse(date, CUSTOM_FORMATTER);
+        }
     }
-
 }

@@ -14,7 +14,7 @@ import ru.practicum.enums.events.EventState;
 
 import java.util.List;
 
-@FeignClient(name = "event-service")
+@FeignClient(name = "event-service", path = "/admin/events")
 public interface AdminEventClient {
     @GetMapping
     List<EventLongDto> getAllEventsByAdmin(
@@ -33,4 +33,7 @@ public interface AdminEventClient {
 
     @GetMapping("/{id}")
     EventFullDto findById(@PathVariable("id") @Positive Long id) throws FeignException;
+
+    @PutMapping("/save")
+    EventFullDto saveEvent(@RequestBody EventFullDto event) throws FeignException;
 }

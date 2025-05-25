@@ -53,12 +53,11 @@ public class CustomizedEventStorageImpl implements CustomizedEventStorage {
                                              Root<Event> root,
                                              EventAdminParams param) {
         List<Predicate> predicates = new ArrayList<>();
-        var initiator = (Join<Object, Object>) root.fetch("initiator");
         var category = (Join<Object, Object>) root.fetch("category");
 
         if (param.getUsers() != null && !param.getUsers().isEmpty()
                 && !(param.getUsers().size() == 1 && param.getUsers().contains(0L))) {
-            predicates.add(criteriaBuilder.in(root.get("initiator").get("id")).value(param.getUsers()));
+            predicates.add(criteriaBuilder.in(root.get("initiator")).value(param.getUsers()));
         }
         if (param.getStates() != null && !param.getStates().isEmpty()) {
             predicates.add(criteriaBuilder.in(root.get("state")).value(param.getStates()));
@@ -81,7 +80,6 @@ public class CustomizedEventStorageImpl implements CustomizedEventStorage {
                                              Root<Event> root,
                                              EventPublicParams param) {
         List<Predicate> predicates = new ArrayList<>();
-        var initiator = (Join<Object, Object>) root.fetch("initiator");
         var category = (Join<Object, Object>) root.fetch("category");
 
         // Только опубликованные event

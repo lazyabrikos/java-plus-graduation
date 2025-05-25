@@ -29,8 +29,8 @@ public class Event {
     private String description;
     @Column(name = "event_date")
     private LocalDateTime eventDate;
-    @Column(name = "initiator_id")
-    private Long initiatorId;
+    @Column(name = "initiator")
+    private Long initiator;
     @Column(name = "paid")
     private Boolean paid;
     @Column(name = "loc_lat")

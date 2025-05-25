@@ -50,7 +50,8 @@ public class AdminUserController {
     }
 
     @GetMapping("/{userId}")
-    public UserDto getById(Long userId) {
+    public UserDto getById(@PathVariable Long userId) {
+        log.info("Got request with id = {}", userId);
         return userService.findUserById(userId);
     }
 }

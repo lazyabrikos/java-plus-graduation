@@ -7,7 +7,7 @@ import ru.practicum.clients.UserClient;
 import ru.practicum.clients.event.AdminEventClient;
 
 @SpringBootApplication
-@EnableFeignClients(clients = {UserClient.class, AdminEventClient.class})
+@EnableFeignClients(clients = {UserClient.class})
 public class EventServiceApp {
     public static void main(String[] args) {
         SpringApplication.run(EventServiceApp.class, args);

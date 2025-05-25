@@ -42,4 +42,6 @@ public interface EventService {
     Optional<Event> findByCategory(Category category);
 
     EventFullDto getEventDtoByIdWithHit(Long id, HttpServletRequest httpServletRequest);
+
+    EventFullDto saveEvent(EventFullDto eventFullDto);
 }

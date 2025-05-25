@@ -32,17 +32,18 @@ public class RequestController {
         return requestService.getUserRequests(userId);
     }
 
-
-    @GetMapping("/events/{eventId}/requests")
+    @RequestMapping(value = "/events/{eventId}/requests", method = RequestMethod.GET)
     public List<RequestDto> getRequestsByEventId(@PathVariable Long userId,
                                                  @PathVariable Long eventId) throws ValidationException, NotFoundException {
+        log.info("Пришел Get запрос на получение всех запросов на участие в событие пользователя");
         return requestService.getRequestsByEventId(userId, eventId);
     }
 
-    @PatchMapping("/events/{eventId}/requests")
+    @RequestMapping(value = "/events/{eventId}/requests", method = RequestMethod.PATCH)
     public RequestDto updateRequest(@PathVariable Long userId,
                                     @PathVariable Long eventId,
                                     @RequestBody RequestDto request) throws ValidationException, DataConflictException, NotFoundException {
+        log.info("Got patch request with body = {}", request);
         return requestService.updateRequest(userId, eventId, request);
     }
 

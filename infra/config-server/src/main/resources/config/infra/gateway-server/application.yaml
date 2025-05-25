@@ -13,15 +13,19 @@ spring:
         - id: user_service_route
           uri: lb://user-service
           predicates:
-            - Path=/users/**,/admin/users/**
+            - Path=/admin/users/**
+        - id: request_service_route
+          uri: lb://request-service
+          predicates:
+            - Path=/users/*/events/*/requests/**,/users/*/requests/**
+            - Method=GET,POST,PATCH,DELETE
+          order: 1
         - id: event_service_route
           uri: lb://event-service
           predicates:
             - Path=/events/**,/admin/events/**,/users/*/events/**,/admin/compilations/**,/compilations/**,/admin/categories/**,/categories/**
-        - id: request_service_route
-          uri: lb://request-service
-          predicates:
-            - Path=/users/*/requests/**
+            - Method=GET,POST,PATCH,DELETE
+          order: 2
         - id: comment_service_route
           uri: lb://comment-service
           predicates:

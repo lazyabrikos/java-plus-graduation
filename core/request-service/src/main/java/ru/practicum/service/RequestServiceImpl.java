@@ -38,12 +38,13 @@ public class RequestServiceImpl implements RequestService {
     @Transactional
     public RequestDto addRequest(Long userId, Long eventId) throws DataConflictException, NotFoundException {
         UserDto user = userClient.getById(userId);
+        log.info("Send request to event-client");
         EventFullDto event = eventClient.findById(eventId);
 
-        if (event.getInitiatorId().equals(userId)) {
+        if (event.getInitiator().equals(userId)) {
             throw new DataConflictException("Создатель события не может подать заявку на участие");
         }
-        if (!event.getState().equals(EventState.PUBLISHED)) {
+        if (!event.getState().equals(  EventState.PUBLISHED.name())) {
             throw new DataConflictException("Событие не опубликовано");
         }
         List<Request> requests = getRequestsByEventId(event.getId());
@@ -71,6 +72,7 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public List<RequestDto> getRequestsByEventId(Long userId, Long eventId) throws ValidationException, NotFoundException {
         List<Request> requests = getRequests(userId, eventId);
+        log.info("Got requests = {}", requests.size());
         return requests.stream()
                 .map(requestMapper::mapRequest)
                 .collect(Collectors.toList());
@@ -102,7 +104,7 @@ public class RequestServiceImpl implements RequestService {
                 if (updateRequest.getStatus().equals(CONFIRMED_REQUEST) && event.getParticipantLimit() != 0) {
                     if (event.getParticipantLimit() < confirmedRequestsCounter) {
 
-                        pending.stream().peek(p -> p.setStatus(REJECTED_REQUEST)).collect(Collectors.toList());
+                        pending.stream().peek(p -> p.setStatus(REJECTED_REQUEST)).toList();
 
                         throw new DataConflictException("Превышено число возможных заявок на участие");
                     }
@@ -130,7 +132,8 @@ public class RequestServiceImpl implements RequestService {
         }
 
         event.setConfirmedRequests(confirmedRequestsCounter);
-        //eventRepository.save(event);
+        log.info("Send request for saving event");
+        eventClient.saveEvent(event);
         requestRepository.saveAll(pending);
 
         requestRepository.saveAll(result);
@@ -179,15 +182,17 @@ public class RequestServiceImpl implements RequestService {
 
     private List<Request> getRequests(Long userId, Long eventId) throws ValidationException, NotFoundException {
         UserDto userDto = userClient.getById(userId);
+        log.info("Got userDto = {}", userDto);
         EventFullDto event = eventClient.findById(eventId);
-        if (!userDto.getId().equals(event.getInitiatorId())) {
+        log.info("Got event = {}", event);
+        if (!userDto.getId().equals(event.getInitiator())) {
             throw new ValidationException("Пользователь не инициатор события c id=" + eventId);
         }
-        return requestRepository.findByEventInitiatorId(userId);
+        return requestRepository.findByEventId(eventId);
     }
 
     private List<Request> getRequestsByEventId(Long eventId) throws NotFoundException {
-        eventClient.findById(eventId);
+        EventFullDto eventFullDto = eventClient.findById(eventId);
         return requestRepository.findByEventId(eventId);
     }
 }

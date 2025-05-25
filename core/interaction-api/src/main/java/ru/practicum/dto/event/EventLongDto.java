@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class EventLongDto {
     Long id;
-    Long initiatorId;
+    Long initiator;
     String title;
     String annotation;
     String description;

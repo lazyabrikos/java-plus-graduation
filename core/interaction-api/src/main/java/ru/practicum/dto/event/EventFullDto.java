@@ -16,7 +16,7 @@ public class EventFullDto {
     private String description;
     private String eventDate;
     private Long id;
-    private Long initiatorId;
+    private Long initiator;
     private Boolean paid;
     private Location location;
     private Integer participantLimit;

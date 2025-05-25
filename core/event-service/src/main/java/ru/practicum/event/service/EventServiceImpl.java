@@ -2,7 +2,6 @@ package ru.practicum.event.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +34,6 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@NoArgsConstructor(force = true)
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
 
@@ -56,14 +54,16 @@ public class EventServiceImpl implements EventService {
 
     @Transactional
     public EventLongDto createEvent(Long userId, NewEventDto newEventDto) {
+        log.info("Send request to user-client");
         UserDto initiator = userClient.getById(userId);
+        log.info("Got user with id = {}", initiator.getId());
         Category category = categoryService.getCategoryByIdNotMapping(newEventDto.getCategory());
         Event event = eventMapper.toEvent(newEventDto);
         if (event.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
             throw new InvalidRequestException("The date and time for which the event is scheduled cannot be earlier " +
                     "than two hours from the current moment");
         }
-        event.setInitiatorId(userId);
+        event.setInitiator(userId);
         event.setCategory(category);
         event.setConfirmedRequests(0L);
         event.setState(EventState.PENDING);
@@ -77,7 +77,7 @@ public class EventServiceImpl implements EventService {
 
     public EventFullDto getEventOfUserById(Long userId, Long eventId) {
         userClient.getById(userId);
-        Optional<Event> optEventSaved = eventRepository.findByIdAndInitiatorId(eventId, userId);
+        Optional<Event> optEventSaved = eventRepository.findByIdAndInitiator(eventId, userId);
         EventFullDto eventFullDto;
         if (optEventSaved.isPresent()) {
             eventFullDto = eventMapper.toEventFullDto(optEventSaved.get());
@@ -99,7 +99,7 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public EventLongDto updateEventByUser(Long userId, Long eventId, UpdateEventUserRequest updateEvent) {
         userClient.getById(userId);
-        Optional<Event> optEventSaved = eventRepository.findByIdAndInitiatorId(eventId, userId);
+        Optional<Event> optEventSaved = eventRepository.findByIdAndInitiator(eventId, userId);
         Event eventSaved;
         if (optEventSaved.isPresent()) {
             eventSaved = optEventSaved.get();
@@ -293,6 +293,13 @@ public class EventServiceImpl implements EventService {
 
         log.info("Событие ID = {} успешно обновлено от имени администратора", id);
         return eventFullDto;
+    }
+
+    @Override
+    public EventFullDto saveEvent(EventFullDto eventFullDto) {
+        Event event = eventMapper.fromEventFullDtoToEvent(eventFullDto);
+        return eventMapper.toEventFullDto(eventRepository.save(event));
+
     }
 
     // ----- Вспомогательная часть ----

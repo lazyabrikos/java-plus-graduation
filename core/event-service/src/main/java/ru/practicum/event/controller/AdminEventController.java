@@ -1,5 +1,6 @@
 package ru.practicum.event.controller;
 
+import feign.FeignException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -74,5 +75,12 @@ public class AdminEventController {
     public EventFullDto findById(@PathVariable("id") @Positive Long id) {
         log.info("Получение подробной информации об опубликованном событии по его идентификатору.");
         return eventService.getEventById(id);
+    }
+
+    @PutMapping("/save")
+    public EventFullDto saveEvent(@RequestBody EventFullDto eventFullDto) {
+        log.info("Запрос на сохранение событий");
+        return eventService.saveEvent(eventFullDto);
+
     }
 }
