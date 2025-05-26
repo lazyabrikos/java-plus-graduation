@@ -18,10 +18,9 @@ public class PublicCompilationController {
     private final CompilationService service;
 
     @GetMapping
-    public List<CompilationResponseDto> get(@RequestParam(value = "pinned", required = false) Boolean pinned,
-                                            @RequestParam(value = "from", defaultValue = "0") Integer from,
-                                            @RequestParam(value = "size",
-                                                    defaultValue = "10") Integer size) {
+    public List<CompilationResponseDto> get(@RequestParam(required = false) Boolean pinned,
+                                            @RequestParam(defaultValue = "0") Integer from,
+                                            @RequestParam(defaultValue = "10") Integer size) {
         log.info("GET /compilations with params: pinned = {}, from = {}, size = {}", pinned, from, size);
         return service.get(pinned, from, size);
     }
