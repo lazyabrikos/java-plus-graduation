@@ -13,14 +13,11 @@
     <name>stats-server</name>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.jakarta.validation.jakarta.validation-api.version>3.0.2
         </project.jakarta.validation.jakarta.validation-api.version>
-        <project.org.mapstruct.mapstruct.version>1.6.0</project.org.mapstruct.mapstruct.version>
         <project.org.projectlombok.lombok-mapstruct-binding.version>0.2.0
         </project.org.projectlombok.lombok-mapstruct-binding.version>
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
     </properties>
     <dependencies>
         <dependency>
@@ -29,9 +26,8 @@
         </dependency>
         <dependency>
             <groupId>ru.practicum</groupId>
-            <artifactId>stats-dto</artifactId>
+            <artifactId>interaction-api</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -88,13 +84,13 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.6.0.Beta2</version>
+            <version>${org.mapstruct.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
-            <version>1.6.0.Beta2</version>
+            <version>${org.mapstruct.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.HitRequestDto;
-import ru.practicum.StatsResponseDto;
-import ru.practicum.service.StatService;
+import ru.practicum.dto.stats.HitRequestDto;
+import ru.practicum.dto.stats.StatsResponseDto;
+import ru.practicum.service.StatServiceMod;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class StatServerController {
-    private final StatService statService;
+    private final StatServiceMod statService;
 
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
