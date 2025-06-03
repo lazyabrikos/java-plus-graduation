@@ -1,5 +1,6 @@
 package ru.practicum.service;
 
+import ru.practicum.dto.request.EventRequestStatusUpdateRequest;
 import ru.practicum.errors.exceptions.DataConflictException;
 import ru.practicum.errors.exceptions.NotFoundException;
 import ru.practicum.errors.exceptions.ValidationException;
@@ -16,7 +17,7 @@ public interface RequestService {
 
     RequestDto updateRequest(Long userId,
                              Long eventId,
-                             String status) throws DataConflictException, ValidationException, NotFoundException;
+                             EventRequestStatusUpdateRequest updateRequest) throws DataConflictException, ValidationException, NotFoundException;
 
     RequestDto cancelRequest(Long userId, Long requestId) throws NotFoundException, ValidationException;
 

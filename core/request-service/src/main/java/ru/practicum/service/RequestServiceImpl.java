@@ -8,6 +8,7 @@ import ru.practicum.clients.UserActionClient;
 import ru.practicum.clients.UserClient;
 import ru.practicum.clients.event.AdminEventClient;
 import ru.practicum.dto.event.EventFullDto;
+import ru.practicum.dto.request.EventRequestStatusUpdateRequest;
 import ru.practicum.dto.user.UserDto;
 import ru.practicum.enums.events.EventState;
 import ru.practicum.errors.exceptions.DataConflictException;
@@ -62,7 +63,7 @@ public class RequestServiceImpl implements RequestService {
         }
 
         Request newRequest = createNewRequest(userId, event);
-        userActionClient.collectUserAction(eventId, userId, ActionTypeProto.ACTION_REGISTER, Instant.now());
+        //userActionClient.collectUserAction(eventId, userId, ActionTypeProto.ACTION_REGISTER, Instant.now());
         return requestMapper.mapRequest(requestRepository.save(newRequest));
     }
 
@@ -87,7 +88,8 @@ public class RequestServiceImpl implements RequestService {
     @Transactional
     public RequestDto updateRequest(Long userId,
                                     Long eventId,
-                                    String status) throws DataConflictException, ValidationException, NotFoundException {
+                                    EventRequestStatusUpdateRequest updateRequest) throws DataConflictException, ValidationException, NotFoundException {
+        log.info("Send request to event client in update");
         EventFullDto event = eventClient.findById(eventId);
         List<Request> requests = getRequestsByEventId(eventId);
         long confirmedRequestsCounter = requests.stream().filter(r -> r.getStatus().equals(CONFIRMED_REQUEST)).count();
@@ -106,7 +108,7 @@ public class RequestServiceImpl implements RequestService {
                     request.getStatus().equals(REJECTED_REQUEST) ||
                     request.getStatus().equals(PENDING_REQUEST)) {
 
-                if (status.equals(CONFIRMED_REQUEST) && event.getParticipantLimit() != 0) {
+                if (updateRequest.getStatus().equals(CONFIRMED_REQUEST) && event.getParticipantLimit() != 0) {
                     if (event.getParticipantLimit() < confirmedRequestsCounter) {
 
                         pending.stream().peek(p -> p.setStatus(REJECTED_REQUEST)).toList();
@@ -115,11 +117,11 @@ public class RequestServiceImpl implements RequestService {
                     }
                 }
 
-                if (status.equals(REJECTED_REQUEST) && request.getStatus().equals(CONFIRMED_REQUEST)) {
+                if (updateRequest.getStatus().equals(REJECTED_REQUEST) && request.getStatus().equals(CONFIRMED_REQUEST)) {
                     throw new DataConflictException("Нельзя отменить подтверждённую заявку");
                 }
 
-                request.setStatus(status);
+                request.setStatus(updateRequest.getStatus());
                 RequestDto participationRequestDto = requestMapper.mapRequest(request);
 
                 if ("CONFIRMED".equals(participationRequestDto.getStatus())) {

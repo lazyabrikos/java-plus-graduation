@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.dto.request.EventRequestStatusUpdateRequest;
 import ru.practicum.errors.exceptions.DataConflictException;
 import ru.practicum.errors.exceptions.NotFoundException;
 import ru.practicum.errors.exceptions.ValidationException;
@@ -42,9 +43,9 @@ public class RequestController {
     @RequestMapping(value = "/events/{eventId}/requests", method = RequestMethod.PATCH)
     public RequestDto updateRequest(@PathVariable Long userId,
                                     @PathVariable Long eventId,
-                                    @RequestParam String status) throws ValidationException, DataConflictException, NotFoundException {
-        log.info("Got patch request with body = {}", status);
-        return requestService.updateRequest(userId, eventId, status);
+                                    @RequestBody EventRequestStatusUpdateRequest updateRequest) throws ValidationException, DataConflictException, NotFoundException {
+        log.info("Got patch request with body = {}", updateRequest);
+        return requestService.updateRequest(userId, eventId, updateRequest);
     }
 
     @PatchMapping("/requests/{requestId}/cancel")
