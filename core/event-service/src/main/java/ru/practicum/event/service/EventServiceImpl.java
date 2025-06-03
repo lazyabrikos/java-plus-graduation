@@ -194,7 +194,6 @@ public class EventServiceImpl implements EventService {
         log.info("Запрос от администратора на получение событий");
 
         List<Event> events = eventRepository.searchEventsForAdmin(param);
-        Map<Long, Long> view = getView(events, false);
         return events.stream()
                 .map(e -> eventMapper.toLongDto(e, 0d))
                 .collect(Collectors.toList());
