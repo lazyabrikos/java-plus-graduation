@@ -288,16 +288,6 @@ public class EventServiceImpl implements EventService {
         Event event = eventRepository.findByIdAndState(id, EventState.PUBLISHED)
                 .orElseThrow(() -> new NotFoundException("Event must be published"));
 
-        List<Long> eventViews = event.getViews();
-        if (eventViews == null) {
-            eventViews = new ArrayList<>();
-        }
-        if (!eventViews.contains(id)) {
-            eventViews.add(id);
-            event.setViews(eventViews);
-            eventRepository.save(event);
-        }
-
         EventFullDto eventFullDto = eventMapper.toEventFullDto(event);
         userActionClient.collectUserAction(id, userId, ActionTypeProto.ACTION_VIEW, Instant.now());
 
