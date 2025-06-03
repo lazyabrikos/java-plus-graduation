@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS event (
     event_date TIMESTAMP WITHOUT TIME ZONE,
     published_on TIMESTAMP WITHOUT TIME ZONE,
     state VARCHAR(255),
-    views BIGINT[],
     CONSTRAINT pk_event PRIMARY KEY (id),
     CONSTRAINT fk_event_on_category FOREIGN KEY (category_id) REFERENCES category (id)
 );

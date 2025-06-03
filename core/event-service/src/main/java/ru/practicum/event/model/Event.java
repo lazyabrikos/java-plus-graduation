@@ -48,6 +48,4 @@ public class Event {
     private String title;
     @Column(name = "confirmed_requests")
     private Long confirmedRequests;
-    @Column(name = "views")
-    private List<Long> views;
 }

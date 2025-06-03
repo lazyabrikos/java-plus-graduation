@@ -34,12 +34,12 @@ public interface EventMapper {
     EventShortDto toEventShortDto(Event event);
 
     @Mapping(target = "eventDate", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    @Mapping(target = "rating", source = "rating")
+    @Mapping(target = "rating", expression = "java(rating)")
     EventShortDto toShortDto(Event event, Double rating);
 
     @Mapping(source = "event.lat", target = "location.lat")
     @Mapping(source = "event.lon", target = "location.lon")
-    @Mapping(target = "rating", source = "rating")
+    @Mapping(target = "rating", expression = "java(rating)")
     EventLongDto toLongDto(Event event, Double rating);
 
     @Mapping(source = "event.lat", target = "location.lat")
