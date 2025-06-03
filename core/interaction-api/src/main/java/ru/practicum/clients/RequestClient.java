@@ -38,4 +38,7 @@ public interface RequestClient {
     public RequestDto cancelRequest(@PathVariable Long userId,
                                     @PathVariable Long requestId) throws ValidationException, NotFoundException,
                                                                                               FeignException;
-    }
+    @GetMapping("/{eventId}/check-user/{userId}")
+    boolean checkExistStatusRequest(@PathVariable Long eventId,@PathVariable Long userId,
+                                    @RequestParam String status);
+}

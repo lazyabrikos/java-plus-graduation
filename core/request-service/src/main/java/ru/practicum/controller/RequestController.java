@@ -52,4 +52,10 @@ public class RequestController {
                                     @PathVariable Long requestId) throws ValidationException, NotFoundException {
         return requestService.cancelRequest(userId, requestId);
     }
+
+    @GetMapping("/{eventId}/check-user/{userId}")
+    public boolean checkExistsByEventIdAndRequesterIdAndStatus(@PathVariable Long eventId,@PathVariable Long userId,
+                                                               @RequestParam String status) {
+        return requestService.checkExistsByEventIdAndRequesterIdAndStatus(eventId, userId, status);
+    }
 }

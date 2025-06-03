@@ -29,5 +29,5 @@ public class EventLongDto {
     LocalDateTime publishedOn;
     Boolean requestModeration;
     EventState state;
-    Long views;
+    Double rating;
 }

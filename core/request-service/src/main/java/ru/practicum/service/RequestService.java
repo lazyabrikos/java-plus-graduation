@@ -19,4 +19,7 @@ public interface RequestService {
                              RequestDto request) throws DataConflictException, ValidationException, NotFoundException;
 
     RequestDto cancelRequest(Long userId, Long requestId) throws NotFoundException, ValidationException;
+
+    boolean checkExistsByEventIdAndRequesterIdAndStatus(Long eventId, Long userId, String status);
+
 }

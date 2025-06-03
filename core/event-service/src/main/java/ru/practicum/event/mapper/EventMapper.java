@@ -35,8 +35,8 @@ public interface EventMapper {
     EventShortDto toEventShortDto(Event event);
 
     @Mapping(target = "eventDate", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    @Mapping(target = "views", source = "views")
-    EventShortDto toShortDto(Event event, Long views);
+    @Mapping(target = "rating", source = "rating")
+    EventShortDto toShortDto(Event event, Double rating);
 
     @Mapping(source = "event.lat", target = "location.lat")
     @Mapping(source = "event.lon", target = "location.lon")

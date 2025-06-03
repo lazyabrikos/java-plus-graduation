@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.clients.UserActionClient;
 import ru.practicum.clients.UserClient;
 import ru.practicum.clients.event.AdminEventClient;
 import ru.practicum.dto.event.EventFullDto;
@@ -13,16 +14,18 @@ import ru.practicum.errors.exceptions.DataConflictException;
 import ru.practicum.errors.exceptions.NotFoundException;
 import ru.practicum.errors.exceptions.ValidationException;
 import ru.practicum.dto.request.RequestDto;
+import ru.practicum.ewm.grpc.stats.event.ActionTypeProto;
 import ru.practicum.mapper.RequestMapper;
 import ru.practicum.model.Request;
 import ru.practicum.repository.RequestRepository;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.practicum.enums.RequestStatus.*;
+import static ru.practicum.enums.requests.RequestStatus.*;
 
 @Service
 @Slf4j
@@ -33,6 +36,7 @@ public class RequestServiceImpl implements RequestService {
     private final RequestMapper requestMapper;
     private final UserClient userClient;
     private final RequestRepository requestRepository;
+    private final UserActionClient userActionClient;
 
     @Override
     @Transactional
@@ -58,6 +62,7 @@ public class RequestServiceImpl implements RequestService {
         }
 
         Request newRequest = createNewRequest(userId, event);
+        userActionClient.collectUserAction(eventId, userId, ActionTypeProto.ACTION_REGISTER, Instant.now());
         return requestMapper.mapRequest(requestRepository.save(newRequest));
     }
 
@@ -154,6 +159,11 @@ public class RequestServiceImpl implements RequestService {
         }
         request.setStatus(CANCELED_REQUEST);
         return requestMapper.mapRequest(requestRepository.save(request));
+    }
+
+    @Override
+    public boolean checkExistsByEventIdAndRequesterIdAndStatus(Long eventId, Long userId, String status) {
+        return requestRepository.existsByEventIdAndRequesterIdAndStatus(eventId, userId, status);
     }
 
     private Request createNewRequest(Long userId, EventFullDto event) {
