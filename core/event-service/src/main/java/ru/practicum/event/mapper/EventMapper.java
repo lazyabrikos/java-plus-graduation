@@ -31,7 +31,6 @@ public interface EventMapper {
     Event fromEventFullDtoToEvent(EventFullDto eventFullDto);
 
     @Mapping(target = "eventDate", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    @Mapping(target = "views", expression = "java(getViewsCount(event.getViews()))")
     EventShortDto toEventShortDto(Event event);
 
     @Mapping(target = "eventDate", dateFormat = "yyyy-MM-dd HH:mm:ss")
