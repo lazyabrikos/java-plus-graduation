@@ -63,7 +63,7 @@ public class RequestServiceImpl implements RequestService {
         }
 
         Request newRequest = createNewRequest(userId, event);
-        //userActionClient.collectUserAction(eventId, userId, ActionTypeProto.ACTION_REGISTER, Instant.now());
+        userActionClient.collectUserAction(eventId, userId, ActionTypeProto.ACTION_REGISTER, Instant.now());
         return requestMapper.mapRequest(requestRepository.save(newRequest));
     }
 
