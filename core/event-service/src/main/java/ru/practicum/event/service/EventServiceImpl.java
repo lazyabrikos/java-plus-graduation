@@ -196,7 +196,7 @@ public class EventServiceImpl implements EventService {
         List<Event> events = eventRepository.searchEventsForAdmin(param);
         Map<Long, Long> view = getView(events, false);
         return events.stream()
-                .map(e -> eventMapper.toLongDto(e, view.getOrDefault(e.getId(), 0L)))
+                .map(e -> eventMapper.toLongDto(e, 0d))
                 .collect(Collectors.toList());
     }
 
