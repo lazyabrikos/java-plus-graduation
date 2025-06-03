@@ -40,12 +40,11 @@ public interface EventMapper {
 
     @Mapping(source = "event.lat", target = "location.lat")
     @Mapping(source = "event.lon", target = "location.lon")
-    @Mapping(target = "views", source = "views")
-    EventLongDto toLongDto(Event event, Long views);
+    @Mapping(target = "rating", source = "rating")
+    EventLongDto toLongDto(Event event, Double rating);
 
     @Mapping(source = "event.lat", target = "location.lat")
     @Mapping(source = "event.lon", target = "location.lon")
-    @Mapping(target = "views", expression = "java(getViewsCount(event.getViews()))")
     EventLongDto toLongDto(Event event);
 
     @Mapping(target = "eventDate", dateFormat = "yyyy-MM-dd HH:mm:ss")
@@ -53,22 +52,7 @@ public interface EventMapper {
     @Mapping(target = "publishedOn", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @Mapping(source = "lat", target = "location.lat")
     @Mapping(source = "lon", target = "location.lon")
-    @Mapping(target = "views", expression = "java(getViewsCount(event.getViews()))")
     EventFullDto toEventFullDto(Event event);
-
-    default Long getViewsCount(List<Long> views) {
-        if (views == null) {
-            return 0L;
-        }
-        return (long) views.size();
-    }
-
-    default List<Long> toViewsList(Long views) {
-        if (views == null) {
-            return List.of();
-        }
-        return List.of(views);
-    }
 
     default LocalDateTime parseDateTime(String dateTime) {
         if (dateTime == null) {
