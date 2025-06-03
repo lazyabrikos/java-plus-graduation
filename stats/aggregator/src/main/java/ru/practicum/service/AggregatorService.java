@@ -30,6 +30,7 @@ public class AggregatorService implements Runnable {
     @Value("${spring.kafka.consumer.poll-timeout}")
     private int pollTimeout;
 
+    @Override
     public void run() {
         try {
             consumer.subscribe(List.of(topicUserAction));
