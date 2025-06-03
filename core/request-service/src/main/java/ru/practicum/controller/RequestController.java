@@ -53,7 +53,7 @@ public class RequestController {
         return requestService.cancelRequest(userId, requestId);
     }
 
-    @GetMapping("/{eventId}/check-user/{userId}")
+    @GetMapping("/{eventId}/check-user")
     public boolean checkExistsByEventIdAndRequesterIdAndStatus(@PathVariable Long eventId,@PathVariable Long userId,
                                                                @RequestParam String status) {
         return requestService.checkExistsByEventIdAndRequesterIdAndStatus(eventId, userId, status);
