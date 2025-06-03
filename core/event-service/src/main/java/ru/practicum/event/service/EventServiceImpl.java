@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.categories.model.Category;
 import ru.practicum.categories.service.CategoryService;
 import ru.practicum.clients.RecommendationsClient;
-import ru.practicum.clients.RequestClient;
+import ru.practicum.clients.request.RequestClient;
 import ru.practicum.clients.UserActionClient;
 import ru.practicum.clients.UserClient;
 import ru.practicum.dto.event.*;

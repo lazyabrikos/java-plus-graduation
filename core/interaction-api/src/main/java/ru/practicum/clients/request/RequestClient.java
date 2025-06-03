@@ -1,4 +1,4 @@
-package ru.practicum.clients;
+package ru.practicum.clients.request;
 
 import feign.FeignException;
 import org.springframework.cloud.openfeign.FeignClient;
