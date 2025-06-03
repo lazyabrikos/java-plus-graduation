@@ -2,7 +2,6 @@ package ru.practicum.clients;
 
 import feign.FeignException;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.request.RequestDto;
 import ru.practicum.errors.exceptions.DataConflictException;
