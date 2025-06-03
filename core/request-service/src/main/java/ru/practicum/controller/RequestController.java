@@ -42,9 +42,9 @@ public class RequestController {
     @RequestMapping(value = "/events/{eventId}/requests", method = RequestMethod.PATCH)
     public RequestDto updateRequest(@PathVariable Long userId,
                                     @PathVariable Long eventId,
-                                    @RequestBody RequestDto request) throws ValidationException, DataConflictException, NotFoundException {
-        log.info("Got patch request with body = {}", request);
-        return requestService.updateRequest(userId, eventId, request);
+                                    @RequestParam String status) throws ValidationException, DataConflictException, NotFoundException {
+        log.info("Got patch request with body = {}", status);
+        return requestService.updateRequest(userId, eventId, status);
     }
 
     @PatchMapping("/requests/{requestId}/cancel")

@@ -87,7 +87,7 @@ public class RequestServiceImpl implements RequestService {
     @Transactional
     public RequestDto updateRequest(Long userId,
                                     Long eventId,
-                                    RequestDto updateRequest) throws DataConflictException, ValidationException, NotFoundException {
+                                    String status) throws DataConflictException, ValidationException, NotFoundException {
         EventFullDto event = eventClient.findById(eventId);
         List<Request> requests = getRequestsByEventId(eventId);
         long confirmedRequestsCounter = requests.stream().filter(r -> r.getStatus().equals(CONFIRMED_REQUEST)).count();
@@ -106,7 +106,7 @@ public class RequestServiceImpl implements RequestService {
                     request.getStatus().equals(REJECTED_REQUEST) ||
                     request.getStatus().equals(PENDING_REQUEST)) {
 
-                if (updateRequest.getStatus().equals(CONFIRMED_REQUEST) && event.getParticipantLimit() != 0) {
+                if (status.equals(CONFIRMED_REQUEST) && event.getParticipantLimit() != 0) {
                     if (event.getParticipantLimit() < confirmedRequestsCounter) {
 
                         pending.stream().peek(p -> p.setStatus(REJECTED_REQUEST)).toList();
@@ -115,11 +115,11 @@ public class RequestServiceImpl implements RequestService {
                     }
                 }
 
-                if (updateRequest.getStatus().equals(REJECTED_REQUEST) && request.getStatus().equals(CONFIRMED_REQUEST)) {
+                if (status.equals(REJECTED_REQUEST) && request.getStatus().equals(CONFIRMED_REQUEST)) {
                     throw new DataConflictException("Нельзя отменить подтверждённую заявку");
                 }
 
-                request.setStatus(updateRequest.getStatus());
+                request.setStatus(status);
                 RequestDto participationRequestDto = requestMapper.mapRequest(request);
 
                 if ("CONFIRMED".equals(participationRequestDto.getStatus())) {

@@ -29,7 +29,7 @@ public interface RequestClient {
     @PatchMapping("/events/{eventId}/requests")
     public RequestDto updateRequest(@PathVariable Long userId,
                                     @PathVariable Long eventId,
-                                    @RequestBody RequestDto request) throws ValidationException, DataConflictException,
+                                    @RequestParam String status) throws ValidationException, DataConflictException,
                                                                             NotFoundException, FeignException;
 
 
@@ -38,6 +38,6 @@ public interface RequestClient {
                                     @PathVariable Long requestId) throws ValidationException, NotFoundException,
                                                                                               FeignException;
     @GetMapping("/{eventId}/check-user/{userId}")
-    boolean checkExistStatusRequest(@PathVariable Long eventId,@PathVariable Long userId,
+    public boolean checkExistStatusRequest(@PathVariable Long eventId,@PathVariable Long userId,
                                     @RequestParam String status);
 }
