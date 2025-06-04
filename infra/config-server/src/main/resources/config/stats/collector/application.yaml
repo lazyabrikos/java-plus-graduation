@@ -3,6 +3,12 @@ grpc:
     port: 0
     security:
       enabled: false
+  client:
+    collector:
+      address: 'discovery:///collector'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 spring:
   kafka:
     producer:
