@@ -1,8 +1,7 @@
-package ru.practicum.clients;
+package ru.practicum.clients.request;
 
 import feign.FeignException;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.request.RequestDto;
 import ru.practicum.errors.exceptions.DataConflictException;
@@ -30,7 +29,7 @@ public interface RequestClient {
     @PatchMapping("/events/{eventId}/requests")
     public RequestDto updateRequest(@PathVariable Long userId,
                                     @PathVariable Long eventId,
-                                    @RequestBody RequestDto request) throws ValidationException, DataConflictException,
+                                    @RequestParam String status) throws ValidationException, DataConflictException,
                                                                             NotFoundException, FeignException;
 
 
@@ -38,4 +37,7 @@ public interface RequestClient {
     public RequestDto cancelRequest(@PathVariable Long userId,
                                     @PathVariable Long requestId) throws ValidationException, NotFoundException,
                                                                                               FeignException;
-    }
+    @GetMapping("/{eventId}/check-user")
+    public boolean checkExistStatusRequest(@PathVariable Long eventId,@PathVariable Long userId,
+                                    @RequestParam String status);
+}

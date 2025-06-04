@@ -30,6 +30,8 @@ public class PublicEventController {
 
     private final EventService eventService;
     private final StatsService statsService;
+    private final String AuthHeaderKey = "X-EWM-USER-ID";
+
 
     @GetMapping
     public ResponseEntity<List<EventShortDto>> getAllEvents(
@@ -61,7 +63,6 @@ public class PublicEventController {
                 .size(size)
                 .sort(sort)
                 .build();
-        statsService.createStats(request.getRequestURI(), request.getRemoteAddr());
         List<EventShortDto> events = eventService.getPublicEvents(eventPublicParams);
         log.info("Calling the GET request to /events endpoint");
         return ResponseEntity.status(HttpStatus.OK)
@@ -69,10 +70,20 @@ public class PublicEventController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventFullDto> getEventDtoById(@PathVariable Long id,
+    public ResponseEntity<EventFullDto> getEventDtoById(@RequestHeader(AuthHeaderKey) long userId, @PathVariable Long id,
                                                         HttpServletRequest httpServletRequest) {
         log.info("Calling the GET request to /events/{} endpoint", id);
-        statsService.createStats(httpServletRequest.getRequestURI(), httpServletRequest.getRemoteAddr());
-        return ResponseEntity.status(HttpStatus.OK).body(eventService.getEventDtoByIdWithHit(id, httpServletRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(eventService.getEventDtoByIdWithHit(userId, id, httpServletRequest));
+    }
+
+    @GetMapping("/recommendations")
+    public List<EventShortDto> getEventsRecommendations(@RequestHeader(AuthHeaderKey) long userId,
+                                                        @RequestParam(defaultValue = "10") int maxResults) {
+        return eventService.getEventsRecommendations(userId, maxResults);
+    }
+
+    @PutMapping("/{eventId}/like")
+    public void addLikeToEvent(@PathVariable Long eventId, @RequestHeader(AuthHeaderKey) long userId) {
+        eventService.addLikeToEvent(eventId, userId);
     }
 }

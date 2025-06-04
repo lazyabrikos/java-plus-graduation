@@ -19,7 +19,7 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String annotation;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
@@ -48,6 +48,4 @@ public class Event {
     private String title;
     @Column(name = "confirmed_requests")
     private Long confirmedRequests;
-    @Column(name = "views")
-    private List<Long> views;
 }

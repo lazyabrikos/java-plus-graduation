@@ -18,6 +18,18 @@
 
     <dependencies>
         <dependency>
+            <groupId>ru.practicum</groupId>
+            <artifactId>avro-schema</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>ru.practicum</groupId>
+            <artifactId>grpc-clients</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${org.mapstruct.version}</version>

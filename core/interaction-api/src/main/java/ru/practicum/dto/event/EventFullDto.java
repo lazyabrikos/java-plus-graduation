@@ -25,5 +25,5 @@ public class EventFullDto {
     private String state;
     private String title;
     private Long confirmedRequests;
-    private Long views;
+    private Double rating;
 }
