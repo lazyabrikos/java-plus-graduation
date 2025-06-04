@@ -35,8 +35,8 @@ public class AggregatorService implements Runnable {
     @Override
     public void run() {
         try {
-            consumer.subscribe(List.of(topicUserAction));
             Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
+            consumer.subscribe(List.of(topicUserAction));
 
             while (true) {
                 ConsumerRecords<Long, UserActionAvro> records = consumer.poll(Duration.ofMillis(pollTimeout));

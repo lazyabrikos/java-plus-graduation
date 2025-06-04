@@ -30,9 +30,8 @@ public class EventSimilarityService implements Runnable {
 
     public void run() {
         try {
-            consumer.subscribe(List.of(topicEventSimilarity));
             Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
-
+            consumer.subscribe(List.of(topicEventSimilarity));
             while (true) {
                 ConsumerRecords<Long, EventSimilarityAvro> records = consumer.poll(Duration.ofMillis(pollTimeout));
 
