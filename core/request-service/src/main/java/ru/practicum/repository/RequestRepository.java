@@ -37,4 +37,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     @Query("SELECT r FROM Request r " +
             "WHERE r.requesterId = :userId")
     List<Request> findByEventInitiatorId(Long userId);
+
+    boolean existsByEventIdAndRequesterIdAndStatus(Long eventId, Long userId, String status);
+
 }

@@ -1,4 +1,4 @@
-package ru.practicum.enums;
+package ru.practicum.enums.requests;
 
 public class RequestStatus {
     public static final String PENDING_REQUEST = "PENDING";

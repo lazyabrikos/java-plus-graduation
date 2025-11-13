@@ -59,6 +59,7 @@ public class AdminEventController {
                 .pageable(PageRequest.of(page, size, sort))
                 .build();
         log.info("Calling the GET request to /admin/events endpoint");
+        log.info("User Ids = {}", users);
         return eventService.getAllEventsByAdmin(eventAdminParams);
     }
 

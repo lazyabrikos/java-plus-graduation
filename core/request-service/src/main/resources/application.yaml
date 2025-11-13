@@ -22,3 +22,9 @@ eureka:
     hostname: localhost
     instance-id: "${spring.application.name}:${random.value}"
     leaseRenewalIntervalInSeconds: 10
+
+grpc:
+  client:
+    event-service:
+      address: static://localhost:9090
+      negotiationType: PLAINTEXT

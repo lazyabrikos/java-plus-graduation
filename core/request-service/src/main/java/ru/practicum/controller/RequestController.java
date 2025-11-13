@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.dto.request.EventRequestStatusUpdateRequest;
 import ru.practicum.errors.exceptions.DataConflictException;
 import ru.practicum.errors.exceptions.NotFoundException;
 import ru.practicum.errors.exceptions.ValidationException;
@@ -42,14 +43,20 @@ public class RequestController {
     @RequestMapping(value = "/events/{eventId}/requests", method = RequestMethod.PATCH)
     public RequestDto updateRequest(@PathVariable Long userId,
                                     @PathVariable Long eventId,
-                                    @RequestBody RequestDto request) throws ValidationException, DataConflictException, NotFoundException {
-        log.info("Got patch request with body = {}", request);
-        return requestService.updateRequest(userId, eventId, request);
+                                    @RequestBody EventRequestStatusUpdateRequest updateRequest) throws ValidationException, DataConflictException, NotFoundException {
+        log.info("Got patch request with body = {}", updateRequest);
+        return requestService.updateRequest(userId, eventId, updateRequest);
     }
 
     @PatchMapping("/requests/{requestId}/cancel")
     public RequestDto cancelRequest(@PathVariable Long userId,
                                     @PathVariable Long requestId) throws ValidationException, NotFoundException {
         return requestService.cancelRequest(userId, requestId);
+    }
+
+    @GetMapping("/{eventId}/check-user")
+    public boolean checkExistsByEventIdAndRequesterIdAndStatus(@PathVariable Long eventId,@PathVariable Long userId,
+                                                               @RequestParam String status) {
+        return requestService.checkExistsByEventIdAndRequesterIdAndStatus(eventId, userId, status);
     }
 }

@@ -41,7 +41,12 @@ public interface EventService {
 
     Optional<Event> findByCategory(Category category);
 
-    EventFullDto getEventDtoByIdWithHit(Long id, HttpServletRequest httpServletRequest);
+    EventFullDto getEventDtoByIdWithHit(Long userId, Long id, HttpServletRequest httpServletRequest);
 
     EventFullDto saveEvent(EventFullDto eventFullDto);
+
+    List<EventShortDto> getEventsRecommendations(Long userId, int maxResults);
+
+    void addLikeToEvent(Long eventId, Long userId);
+
 }
